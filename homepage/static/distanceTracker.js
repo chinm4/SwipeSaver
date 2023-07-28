@@ -19,9 +19,10 @@ function showPosition(position) {
 }
 
 var diningHalls = [
-    { name: "Hall 1", latitude: 40.712776, longitude: -74.005974 },
-    { name: "Hall 2", latitude: 34.052235, longitude: -118.243683 },
-    // Add more dining halls as needed...
+    { name: "Commons Dining Hall", latitude: 42.72855127771457, longitude: -73.67437774248803 },
+    { name: "Russell Sage Dining Hall", latitude: 42.72978947200118, longitude: -73.67806960678168 },
+    { name: "BARH Dining Hall", latitude: 42.731209458978554, longitude: -73.67131895095905},
+    { name: "Blitman Dining Hall", latitude: 42.73237220304262, longitude: -73.68590039328933},
 ];
 
 function getClosestDiningHalls(userLat, userLon) {
