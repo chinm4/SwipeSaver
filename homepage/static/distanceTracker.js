@@ -1,0 +1,68 @@
+/* The goal of this distance tracker is to compare the user's current location with the location of all of the dining halls to
+pick the closest dining hall to them. This newest version doesn't require a google API key.
+*/
+
+
+// Check if the user's browser supports Geolocation
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+} else {
+    // Handle error if Geolocation is not supported
+    alert("Geolocation is not supported by this browser.");
+}
+
+function showPosition(position) {
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+    // Call function to calculate and display the closest dining halls
+    getClosestDiningHalls(latitude, longitude);
+}
+
+var diningHalls = [
+    { name: "Hall 1", latitude: 40.712776, longitude: -74.005974 },
+    { name: "Hall 2", latitude: 34.052235, longitude: -118.243683 },
+    // Add more dining halls as needed...
+];
+
+function getClosestDiningHalls(userLat, userLon) {
+    diningHalls.forEach(function(hall) {
+        var distance = haversineDistance(userLat, userLon, hall.latitude, hall.longitude);
+        hall.distance = distance;
+    });
+
+    // Sort the dining halls by distance
+    diningHalls.sort(function(a, b) {
+        return a.distance - b.distance;
+    });
+
+    // Call function to display the sorted dining halls on the website
+    displayDiningHalls();
+}
+
+function haversineDistance(lat1, lon1, lat2, lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2-lat1);  
+    var dLon = deg2rad(lon2-lon1); 
+    var a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c; // Distance in km
+    return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
+
+function displayDiningHalls() {
+    var output = '';
+    diningHalls.forEach(function(hall) {
+        output += '<p>' + hall.name + ': ' + hall.distance.toFixed(2) + ' km away</p>';
+    });
+
+    // Assuming you have a div with id="output" in your HTML
+    document.getElementById('output').innerHTML = output;
+}
