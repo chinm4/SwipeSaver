@@ -2,6 +2,8 @@
 pick the closest dining hall to them. This newest version doesn't require a google API key.
 */
 
+// Let's check to make sure we're actually running our file...
+console.log("distanceTracker.js is running");
 
 // Check if the user's browser supports Geolocation
 if (navigator.geolocation) {
@@ -28,7 +30,7 @@ var diningHalls = [
 function getClosestDiningHalls(userLat, userLon) {
     diningHalls.forEach(function(hall) {
         var distance = haversineDistance(userLat, userLon, hall.latitude, hall.longitude);
-        hall.distance = distance;
+        hall.distance = distance * 0.621371; // Converting this to miles
     });
 
     // Sort the dining halls by distance
@@ -60,10 +62,19 @@ function deg2rad(deg) {
 
 function displayDiningHalls() {
     var output = '';
-    diningHalls.forEach(function(hall) {
-        output += '<p>' + hall.name + ': ' + hall.distance.toFixed(2) + ' km away</p>';
+    diningHalls.forEach(function(hall, index) {
+        output += '<p>' + hall.name + ': ' + hall.distance.toFixed(2) + ' mi away';
+        // If the dining hall is the first one in the list (i.e., the closest one)
+        if (index === 0) {
+            output += ' <span style="color: green;">(closest)</span>';
+        }
+        output += '</p>';
     });
 
     // Assuming you have a div with id="output" in your HTML
     document.getElementById('output').innerHTML = output;
 }
+
+
+
+
