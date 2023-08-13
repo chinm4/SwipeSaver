@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Upload with Description</title>
+</head>
+<body>
+    <h1>Image Upload with Description</h1>
+    <form id="upload-form">
+        <input type="file" id="image-input" accept="image/*" />
+        <input type="text" id="description-input" placeholder="Enter description" />
+        <button type="button" id="upload-button">Upload</button>
+    </form>
+    <div id="uploaded-images"></div>
+
+    <script>
+        const uploadForm = document.getElementById("upload-form");
+        const imageInput = document.getElementById("image-input");
+        const descriptionInput = document.getElementById("description-input");
+        const uploadButton = document.getElementById("upload-button");
+        const uploadedImagesContainer = document.getElementById("uploaded-images");
+
+        uploadButton.addEventListener("click", () => {
+            const selectedImage = imageInput.files[0];
+            const description = descriptionInput.value;
+
+            if (selectedImage && description) {
+                const imageContainer = document.createElement("div");
+                const imgElement = document.createElement("img");
+                const descriptionElement = document.createElement("p");
+
+                imgElement.src = URL.createObjectURL(selectedImage);
+                descriptionElement.textContent = description;
+
+                imageContainer.appendChild(imgElement);
+                imageContainer.appendChild(descriptionElement);
+                uploadedImagesContainer.appendChild(imageContainer);
+
+                // Clear input fields
+                imageInput.value = "";
+                descriptionInput.value = "";
+            } else {
+                alert("Please select an image and enter a description.");
+            }
+        });
+    </script>
+</body>
+</html>
