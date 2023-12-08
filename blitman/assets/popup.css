@@ -19,6 +19,17 @@ body {
   border-radius: 5px;
 }
 
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
 .popup {
   display: none;
   position: fixed;
@@ -30,6 +41,8 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   text-align: center;
+  z-index: 2;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .close {
@@ -39,4 +52,9 @@ body {
   font-size: 20px;
   cursor: pointer;
   color: #333;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
